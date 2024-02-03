@@ -1,0 +1,252 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pokedex {
+  display: flex;
+  position: relative;
+  width: 600px;
+  height: 400px;
+}
+
+.pokedex ul li {
+  font-size: small;
+}
+
+.pokedex ul li:nth-of-type(2) {
+  color: #ff5b5b;
+  font-size: large;
+  font-weight: bold;
+}
+
+.left-open-pokedex {
+  width: 300px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #ff5b5b;
+}
+.open .left-open-pokedex {
+  position: relative;
+}
+
+.left-open-pokedex .pokedexInteraction
+{
+  opacity: 0;
+}
+.open .left-open-pokedex .pokedexInteraction
+{
+  animation: middleVisibility 1.5s 0.5s forwards
+}
+
+
+.flip-card-pokedex {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: transparent;
+  width: 600px;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 1.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  transform-style: preserve-3d;
+  display: flex;
+  transform: rotateY(-180deg);
+}
+.flip-card-inner > * {
+  flex-grow: 1;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/*.flip-card-pokedex:hover .flip-card-inner,*/
+.open .flip-card-pokedex .flip-card-inner {
+  transform: rotateY(0deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: calc(100% - 80px);
+  bottom: 0;
+  background-color: #ff5b5b;
+  z-index: 100;
+}
+
+.flip-card-front::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: -80px;
+  left: 0;
+  height: 0;
+  width: 0;
+  border-right: 80px solid transparent;
+  border-bottom: 80px solid #ff5b5b;
+}
+
+.flip-card-back::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: -80px;
+  right: 0;
+  height: 0;
+  width: 0;
+  border-bottom: 80px solid darkred;
+  border-left: 80px solid transparent;
+}
+
+.flip-card-front {
+  color: black;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  background-color: darkred;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.joysticks {
+  display: grid;
+  grid-template-columns: 30px 30px 30px;
+  grid-template-rows: 30px 30px 30px;
+  grid-template-areas:
+    ". topArrow ."
+    "leftArrow . rightArrow"
+    ". bottomArrow .";
+}
+
+.joysticks>*
+{
+  position: relative;
+}
+
+.joysticks>*:after
+{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.topArrow {
+  grid-area: topArrow;
+}
+.topArrow:after {
+  content: "\2191"
+}
+
+.leftArrow {
+  grid-area: leftArrow;
+}
+.rightArrow {
+  grid-area: rightArrow;
+}
+.bottomArrow {
+  grid-area: bottomArrow;
+}
+.bottomArrow:after {
+  content: "\2193"
+}
+
+
+.pokeball {
+  display: block;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(
+      white 16px,
+      black 17px 18px,
+      white 19px 24px,
+      black 25px 32px,
+      transparent 33px
+    ),
+    linear-gradient(to bottom, red 0 80px, black 81px 96px, white 97px 100%);
+  border-radius: 50%;
+  border: 8px solid black;
+  box-shadow: inset -16px -8px 0 0 rgba(0, 0, 0, 0.2);
+  animation: shake 1.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.5s infinite
+}
+
+.pokeball.catch {
+  animation:
+    catch 0.5s ease-out forwards;
+}
+
+/* Animation */
+@keyframes middleVisibility {
+  0% {
+    opacity: 0;
+  }
+  1% {
+    opacity: 100;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translateX(0) rotate(0);
+  }
+  20% {
+    transform: translateX(-10px) rotate(-20deg);
+  }
+  30% {
+    transform: translateX(10px) rotate(20deg);
+  }
+  50% {
+    transform: translateX(-10px) rotate(-10deg);
+  }
+  60% {
+    transform: translateX(10px) rotate(10deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-200%);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes catch {
+  to {
+    filter: saturate(0.8) brightness(0.8);
+  }
+}
